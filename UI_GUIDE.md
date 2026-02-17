@@ -2,7 +2,7 @@
 
 ## Main Window Layout
 
-The PVP Assist window is a 450x550 pixel frame with the following sections:
+The PVP Assist window is a 500x700 pixel frame with the following sections:
 
 ### Window Header
 ```
@@ -12,89 +12,104 @@ The PVP Assist window is a 450x550 pixel frame with the following sections:
 +------------------------------------------+
 ```
 
-### Section 1: Current Status
+### Section 1: Quick Join (Accesso Rapido)
 
-Shows real-time currency information:
+Quick access buttons to join PVP activities:
 
 ```
-Current Status
+⚔️ Quick Join
 ------------------
-Honor: 15,432 (Weekly: 3,200 / 15,000)
+Select Role: [Tank] [Healer] [DPS]
+
+Random Battleground                [Join Queue]
+  ~200-400 Honor per win
+
+Epic Battleground                  [Join Queue]
+  ~300-600 Honor per win
+
+Solo Shuffle                       [Join Queue]
+  ~30-60 Conquest per round
+
+Rated Battleground                 [Join Queue]
+  ~50-100 Conquest per win
+
+Arena 2v2                          [Open LFG]
+  ~25-50 Conquest per win
+
+Arena 3v3                          [Open LFG]
+  ~25-50 Conquest per win
+
+Arena Skirmish                     [Join Queue]
+  ~15-30 Honor per win
+```
+
+**Features:**
+- Role selector to automatically switch spec before joining
+- One-click queue buttons
+- Color-coded rewards (Gold for Honor, Purple for Conquest)
+- Wider buttons (110px) to properly fit button text
+
+### Section 2: Session Tracking (Optional)
+
+Shows current session gains (only appears if you've gained honor/conquest):
+
+```
+📊 Session Tracking
+------------------
+  Session Honor: +450
+  Session Conquest: +120
+```
+
+### Section 3: Current Status (Stato Attuale)
+
+Shows real-time currency information with icons:
+
+```
+💰 Current Status
+------------------
+🏅 Honor: 15,432 (Weekly: 3,200 / 15,000)
   → Remaining to cap: 11,800 Honor
 
-Conquest: 892 (Weekly: 450 / 1,350)
+⚔️ Conquest: 892 (Weekly: 450 / 1,350)
   → Remaining to cap: 900 Conquest
 
-Weekly reset in: 3d 15h 42m
+⏰ Weekly reset in: 3d 15h 42m
 ```
 
 **Color Coding:**
 - Honor values: Gold/Yellow (#FFD100)
 - Conquest values: Purple (#A356EE)
 - Remaining amounts: Light Green when incomplete
-- Cap reached: Bright Green
+- Cap reached: Bright Green with ✓ checkmark
 
-### Section 2: Recommended Activities
+### Section 4: Weekly PVP Quests (Missioni PVP Settimanali)
 
-Prioritized list based on what you need:
-
-```
-Recommended Activities
-------------------
-Honor Activities:
-• Random Battlegrounds
-  ~200-400 Honor per win - Quick honor gains through battlegrounds
-
-• Epic Battlegrounds
-  ~300-600 Honor per win - Larger scale battles with good honor rewards
-
-• World PVP / War Mode
-  Variable Honor - World quests and kills with War Mode enabled
-
-Conquest Activities:
-• Rated Battlegrounds
-  ~50-100 Conquest per win - Rated PVP with guaranteed conquest
-
-• Arena (2v2, 3v3)
-  ~25-50 Conquest per win - Competitive arena matches
-
-• Rated Solo Shuffle
-  ~30-60 Conquest per round - Solo queue rated arena
-
-• Weekly PVP Brawl
-  Conquest bonus - Special weekly event with conquest rewards
-```
-
-### Section 3: Weekly PVP Quests
-
-Tracks completion of weekly quests:
+Tracks completion of weekly quests with helpful guidance:
 
 ```
-Weekly PVP Quests
+📜 Weekly PVP Quests
 ------------------
 ✓ Preserving in PvP
-  Reward: Conquest + Honor - Complete PVP activities
+  🎁 Reward: Conquest + Honor - Complete PVP activities
 
 ○ Arena Skirmishes
-  Reward: Conquest - Win arena skirmishes
+  🎁 Reward: Conquest - Win arena skirmishes
+```
+
+If no quests are tracked, shows helpful guidance:
+```
+📜 Weekly PVP Quests
+------------------
+ℹ️ How to get weekly PVP quests:
+• Visit your faction's PVP area
+• Check the Adventure Guide (Shift+J)
+• Look for quests near PVP vendors
 ```
 
 **Symbols:**
 - ✓ = Completed (Green)
 - ○ = Not completed (Yellow)
-
-### Section 4: Tips
-
-Helpful reminders:
-
-```
-Tips
-------------------
-• Complete daily/weekly quests for bonus rewards
-• Enable War Mode for 10-30% bonus honor
-• Rated content gives better conquest rewards
-• Check group finder for active PVP groups
-```
+- 🎁 = Reward icon
 
 ### Window Footer
 
@@ -104,6 +119,20 @@ Tips
 | Addon by ThePipSpi - Version 1.0.0        |
 +------------------------------------------+
 ```
+
+## Changes from Previous Version
+
+**Removed Sections:**
+- ❌ "Recommended Activities" - Not useful, redundant with Quick Join buttons
+- ❌ "Tips" section - Not needed
+- ❌ "Future Implementation" section - Not useful for users
+
+**Improved Sections:**
+- ✅ "Quick Join" moved to top for better accessibility
+- ✅ "Current Status" now appears under Quick Join with more icons
+- ✅ "Weekly PVP Quests" improved with helpful guidance when no quests are tracked
+- ✅ Icons added throughout the UI (⚔️, 💰, 🏅, ⏰, 📜, 🎁, ℹ️, ✓)
+- ✅ Button width increased from 90px to 110px to prevent text overflow
 
 ## Minimap Button
 
@@ -145,30 +174,26 @@ The interface updates automatically when:
 ### All Caps Reached
 When both weekly caps are reached:
 ```
-Current Status
+💰 Current Status
 ------------------
-Honor: 28,450 (Weekly: 15,000 / 15,000)
-  → Weekly Honor cap reached!
+🏅 Honor: 28,450 (Weekly: 15,000 / 15,000)
+  ✓ Weekly Honor cap reached!
 
-Conquest: 2,134 (Weekly: 1,350 / 1,350)
-  → Weekly Conquest cap reached!
-
-Recommended Activities
-------------------
-✓ All weekly caps reached! Great job!
+⚔️ Conquest: 2,134 (Weekly: 1,350 / 1,350)
+  ✓ Weekly Conquest cap reached!
 ```
 
 ### Fresh Week (After Reset)
 ```
-Current Status
+💰 Current Status
 ------------------
-Honor: 24,328 (Weekly: 0 / 15,000)
+🏅 Honor: 24,328 (Weekly: 0 / 15,000)
   → Remaining to cap: 15,000 Honor
 
-Conquest: 1,567 (Weekly: 0 / 1,350)
+⚔️ Conquest: 1,567 (Weekly: 0 / 1,350)
   → Remaining to cap: 1,350 Conquest
 
-Weekly reset in: 6d 23h 58m
+⏰ Weekly reset in: 6d 23h 58m
 ```
 
 ## Color Scheme

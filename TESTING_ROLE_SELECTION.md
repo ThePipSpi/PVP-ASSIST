@@ -144,7 +144,7 @@ Test with different classes to ensure role detection works:
 - [ ] **Death Knight**: Tank (Blood), DPS (Frost, Unholy)
 - [ ] **Demon Hunter**: Tank (Vengeance), DPS (Havoc)
 - [ ] **Druid**: Tank (Guardian), Healer (Restoration), DPS (Balance, Feral)
-- [ ] **Evoker**: Healer (Preservation), DPS (Devastation, Augmentation)
+- [ ] **Evoker**: Healer (Preservation), DPS (Devastation, Augmentation*)
 - [ ] **Hunter**: DPS only (Beast Mastery, Marksmanship, Survival)
 - [ ] **Mage**: DPS only (Arcane, Fire, Frost)
 - [ ] **Monk**: Tank (Brewmaster), Healer (Mistweaver), DPS (Windwalker)
@@ -154,6 +154,8 @@ Test with different classes to ensure role detection works:
 - [ ] **Shaman**: Healer (Restoration), DPS (Elemental, Enhancement)
 - [ ] **Warlock**: DPS only (Affliction, Demonology, Destruction)
 - [ ] **Warrior**: Tank (Protection), DPS (Arms, Fury)
+
+*Note: Augmentation Evoker is a support spec but queues as DPS in group content
 
 ### Performance Tests
 - [ ] Open and close addon 10 times quickly - no lag

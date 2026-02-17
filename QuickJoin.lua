@@ -11,6 +11,21 @@ local ROLE_TANK = "TANK"
 local ROLE_HEALER = "HEALER"
 local ROLE_DAMAGER = "DAMAGER"
 
+-- Get localized role text
+function QuickJoin:GetLocalizedRoleText(role)
+    local L = PVPAssist.L
+    
+    if role == ROLE_TANK then
+        return L["ROLE_TANK"] or "Tank"
+    elseif role == ROLE_HEALER then
+        return L["ROLE_HEALER"] or "Healer"
+    elseif role == ROLE_DAMAGER then
+        return L["ROLE_DPS"] or "DPS"
+    end
+    
+    return "Unknown"
+end
+
 -- Get available specs for the player's class and their roles
 function QuickJoin:GetPlayerSpecsAndRoles()
     local specs = {}
@@ -461,16 +476,7 @@ function QuickJoin:CreateQuickJoinButton(parent, activityKey, yOffset)
         if selectedRole then
             local specs = QuickJoin:GetSpecsForRole(selectedRole)
             if #specs > 0 then
-                -- Map role to localized text
-                local roleText
-                if selectedRole == ROLE_TANK then
-                    roleText = L["ROLE_TANK"] or "Tank"
-                elseif selectedRole == ROLE_HEALER then
-                    roleText = L["ROLE_HEALER"] or "Healer"
-                else -- ROLE_DAMAGER
-                    roleText = L["ROLE_DPS"] or "DPS"
-                end
-                
+                local roleText = QuickJoin:GetLocalizedRoleText(selectedRole)
                 GameTooltip:AddLine(" ", nil, nil, nil, true)
                 GameTooltip:AddLine(string.format(L["TOOLTIP_WILL_CHANGE_SPEC"] or "Will change to %s spec: %s", roleText, specs[1].name), 0.5, 1, 0.5, true)
             end

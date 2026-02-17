@@ -14,9 +14,13 @@ A World of Warcraft addon that helps players track and maximize their Honor and 
 - **Easy Access**: Minimap button and slash commands for quick access
 
 ### Quick Join Queue (NEW!)
+- **Role Selection**: Choose your desired role (Tank, Healer, or DPS) before queuing
+- **Automatic Spec Switching**: Automatically changes your specialization to match your selected role when joining queue
 - **One-Click Queue Access**: Join PVP activities directly from the addon
+- **Smart Validation**: Only allows role selection for specs available to your class
 - **Reward Preview**: See expected honor/conquest rewards before joining
-- **Tooltips**: Hover over buttons to see detailed activity information
+- **Enhanced Tooltips**: Shows which spec will be used when hovering over queue buttons
+- **Persistent Preferences**: Your selected role is saved between sessions
 - **Supported Activities**:
   - Random Battlegrounds
   - Epic Battlegrounds
@@ -63,7 +67,9 @@ The tracker shows several sections:
 - Time until weekly reset
 
 #### Quick Join (NEW!)
-One-click access to join PVP queues:
+One-click access to join PVP queues with automatic spec switching:
+- **Role Selection** - Choose Tank, Healer, or DPS role before joining queue
+- **Automatic Spec Change** - When joining a queue, your character automatically switches to a spec matching your selected role
 - **Random Battleground** - Join queue instantly (~200-400 Honor/win)
 - **Epic Battleground** - Join epic BG queue (~300-600 Honor/win)
 - **Solo Shuffle** - Navigate to Solo Shuffle (~30-60 Conquest/round)
@@ -71,7 +77,7 @@ One-click access to join PVP queues:
 - **Arena 2v2/3v3** - Opens Group Finder for LFG (~25-50 Conquest/win)
 - **Arena Skirmish** - Join skirmish queue (~15-30 Honor/win)
 
-Each button shows reward ranges and tooltips with details!
+Each button shows reward ranges and tooltips with details! Your selected role is saved and persists between sessions.
 
 #### Recommended Activities
 

@@ -4,12 +4,32 @@ A World of Warcraft addon that helps players track and maximize their Honor and 
 
 ## Features
 
+### Core Features
 - **Real-time Currency Tracking**: Monitor your current Honor and Conquest points
 - **Weekly Cap Monitoring**: See how much you've earned vs the weekly cap
+- **Live Session Tracking**: Track honor and conquest earned during your current session
 - **Smart Activity Recommendations**: Get prioritized suggestions for earning points efficiently
 - **Weekly Quest Tracking**: Track PVP weekly quests and their completion status
 - **Reset Timer**: Know exactly when the weekly reset occurs
 - **Easy Access**: Minimap button and slash commands for quick access
+
+### Quick Join Queue (NEW!)
+- **One-Click Queue Access**: Join PVP activities directly from the addon
+- **Reward Preview**: See expected honor/conquest rewards before joining
+- **Tooltips**: Hover over buttons to see detailed activity information
+- **Supported Activities**:
+  - Random Battlegrounds
+  - Epic Battlegrounds
+  - Solo Shuffle
+  - Rated Battlegrounds
+  - Arena 2v2 (opens Group Finder)
+  - Arena 3v3 (opens Group Finder)
+  - Arena Skirmish
+
+### Localization Support (NEW!)
+- **English (enUS)**: Full support
+- **Italian (itIT)**: Complete translation
+- Automatically detects your client language
 
 ## Installation
 
@@ -31,11 +51,27 @@ Use any of these methods:
 
 The tracker shows several sections:
 
+#### Session Tracking (NEW!)
+- Live tracking of Honor and Conquest earned during your current session
+- Automatically updates as you earn rewards
+- Helps you track your progress in real-time
+
 #### Current Status
 - Your current Honor and Conquest totals
 - Weekly earned amounts vs caps
 - Remaining points needed to reach weekly caps
 - Time until weekly reset
+
+#### Quick Join (NEW!)
+One-click access to join PVP queues:
+- **Random Battleground** - Join queue instantly (~200-400 Honor/win)
+- **Epic Battleground** - Join epic BG queue (~300-600 Honor/win)
+- **Solo Shuffle** - Navigate to Solo Shuffle (~30-60 Conquest/round)
+- **Rated Battleground** - Open rated queue (~50-100 Conquest/win)
+- **Arena 2v2/3v3** - Opens Group Finder for LFG (~25-50 Conquest/win)
+- **Arena Skirmish** - Join skirmish queue (~15-30 Honor/win)
+
+Each button shows reward ranges and tooltips with details!
 
 #### Recommended Activities
 
@@ -57,6 +93,14 @@ Track your progress on weekly PVP quests that offer bonus rewards.
 
 #### Tips
 Helpful reminders for maximizing your PVP gains.
+
+#### Future Implementation (NEW!)
+Shows planned features coming in future updates:
+- Historical statistics and performance tracking
+- Alert notifications when near weekly cap
+- PVP gear upgrade recommendations
+- Arena/RBG rating progression tracker
+- Compare progress with friends
 
 ## Slash Commands
 

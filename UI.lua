@@ -240,7 +240,7 @@ function PVPAssist:UpdateUI()
     yOffset = yOffset + spacing * 0.5
     
     -- Weekly Quests Section
-    CreateSectionHeader(contentFrame, "Weekly PVP Quests", yOffset)
+    CreateSectionHeader(contentFrame, L["WEEKLY_QUESTS"] or "Weekly PVP Quests", yOffset)
     yOffset = yOffset + spacing
     
     local quests = self:GetWeeklyQuestStatus()

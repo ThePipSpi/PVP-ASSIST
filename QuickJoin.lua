@@ -54,6 +54,11 @@ local QUEUE_TYPES = {
 function QuickJoin:JoinBattleground(bgType)
     local L = PVPAssist.L
     
+    if not C_PvP then
+        print("|cffff0000PVP Assist:|r C_PvP API not available")
+        return
+    end
+    
     if bgType == "RANDOM_BG" then
         -- Join random battleground
         C_PvP.JoinBattlefield(1) -- Random BG
@@ -64,8 +69,12 @@ function QuickJoin:JoinBattleground(bgType)
         print("|cff00ff00PVP Assist:|r " .. string.format(L["JOINED_QUEUE"], L["EPIC_BG"]))
     elseif bgType == "RATED_BG" then
         -- Open rated battleground finder
-        PVEFrame_ShowFrame("PVPUIFrame", "RatedPvPFrame")
-        print("|cff00ff00PVP Assist:|r " .. L["OPENING_LFG"] .. " " .. L["RATED_BG"])
+        if PVEFrame_ShowFrame then
+            PVEFrame_ShowFrame("PVPUIFrame", "RatedPvPFrame")
+            print("|cff00ff00PVP Assist:|r " .. L["OPENING_LFG"] .. " " .. L["RATED_BG"])
+        else
+            print("|cffff0000PVP Assist:|r Unable to open Rated PVP frame")
+        end
     end
 end
 
@@ -77,9 +86,13 @@ function QuickJoin:JoinSoloShuffle()
     if PVPUIFrame then
         ShowUIPanel(PVPUIFrame)
         -- Navigate to Solo Shuffle tab
-        PVPQueueFrame_SetCategoryButtonState(PVPQueueFrame.CategoryButton3)
+        if PVPQueueFrame and PVPQueueFrame.CategoryButton3 then
+            PVPQueueFrame_SetCategoryButtonState(PVPQueueFrame.CategoryButton3)
+        end
+        print("|cff00ff00PVP Assist:|r " .. string.format(L["JOINED_QUEUE"], L["SOLO_SHUFFLE"]))
+    else
+        print("|cffff0000PVP Assist:|r Unable to open PVP UI")
     end
-    print("|cff00ff00PVP Assist:|r " .. string.format(L["JOINED_QUEUE"], L["SOLO_SHUFFLE"]))
 end
 
 -- Join arena skirmish
@@ -87,8 +100,12 @@ function QuickJoin:JoinArenaSkirmish()
     local L = PVPAssist.L
     
     -- Join arena skirmish queue
-    C_PvP.JoinSkirmish()
-    print("|cff00ff00PVP Assist:|r " .. string.format(L["JOINED_QUEUE"], L["ARENA_SKIRMISH"]))
+    if C_PvP and C_PvP.JoinSkirmish then
+        C_PvP.JoinSkirmish()
+        print("|cff00ff00PVP Assist:|r " .. string.format(L["JOINED_QUEUE"], L["ARENA_SKIRMISH"]))
+    else
+        print("|cffff0000PVP Assist:|r Arena skirmish not available")
+    end
 end
 
 -- Open LFG for arena (2v2 or 3v3)
@@ -96,21 +113,23 @@ function QuickJoin:OpenArenaLFG(arenaType)
     local L = PVPAssist.L
     
     -- Open the group finder to arena section
-    if PVEFrame then
+    if PVEFrame and PVEFrame_ShowFrame then
         PVEFrame_ShowFrame("GroupFinderFrame", "GroupFinderFrame")
         
         -- Try to navigate to the Premade Groups tab
-        if LFGListFrame then
+        if LFGListFrame and LFGListFrame_SetActivePanel then
             LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
             -- Category 4 is typically PvP
             if C_LFGList then
                 C_LFGList.SetSearchToQuestActiveOnly(false)
             end
         end
+        
+        local arenaName = arenaType == "2v2" and L["ARENA_2V2"] or L["ARENA_3V3"]
+        print("|cff00ff00PVP Assist:|r " .. string.format(L["OPENING_LFG"], arenaName))
+    else
+        print("|cffff0000PVP Assist:|r Unable to open Group Finder")
     end
-    
-    local arenaName = arenaType == "2v2" and L["ARENA_2V2"] or L["ARENA_3V3"]
-    print("|cff00ff00PVP Assist:|r " .. string.format(L["OPENING_LFG"], arenaName))
 end
 
 -- Get reward information for an activity

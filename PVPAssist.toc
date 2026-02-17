@@ -6,4 +6,6 @@
 ## SavedVariables: PVPAssistDB
 
 Core.lua
+Localization.lua
+QuickJoin.lua
 UI.lua

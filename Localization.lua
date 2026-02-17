@@ -72,6 +72,7 @@ local enUS = {
     ["CHANGED_SPEC"] = "Changed specialization to %s",
     ["CANNOT_CHANGE_SPEC_COMBAT"] = "Cannot change specialization while in combat",
     ["NO_SPEC_FOR_ROLE"] = "No specialization available for selected role",
+    ["TOOLTIP_WILL_CHANGE_SPEC"] = "Will change to %s spec: %s",
     
     -- Tips
     ["TIP_1"] = "Complete daily/weekly quests for bonus rewards",
@@ -151,6 +152,7 @@ local itIT = {
     ["CHANGED_SPEC"] = "Specializzazione cambiata in %s",
     ["CANNOT_CHANGE_SPEC_COMBAT"] = "Impossibile cambiare specializzazione durante il combattimento",
     ["NO_SPEC_FOR_ROLE"] = "Nessuna specializzazione disponibile per il ruolo selezionato",
+    ["TOOLTIP_WILL_CHANGE_SPEC"] = "Cambierà in spec %s: %s",
     
     -- Tips
     ["TIP_1"] = "Completa missioni giornaliere/settimanali per ricompense bonus",

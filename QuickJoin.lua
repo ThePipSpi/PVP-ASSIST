@@ -141,9 +141,24 @@ function QuickJoin:JoinBattleground(bgType)
         local specs = self:GetSpecsForRole(selectedRole)
         if #specs > 0 then
             -- Use the first spec that matches the role
-            self:ChangeSpecialization(specs[1].index)
+            local currentSpec = GetSpecialization()
+            local needsChange = true
+            
+            -- Check if current spec already matches the selected role
+            if currentSpec then
+                local _, _, _, _, currentRole = GetSpecializationInfo(currentSpec)
+                if currentRole == selectedRole then
+                    needsChange = false
+                end
+            end
+            
+            -- Only change if needed
+            if needsChange then
+                self:ChangeSpecialization(specs[1].index)
+            end
         else
             print("|cffff0000PVP Assist:|r " .. (L["NO_SPEC_FOR_ROLE"] or "No specialization available for selected role"))
+            return
         end
     end
     
@@ -181,9 +196,24 @@ function QuickJoin:JoinSoloShuffle()
         local specs = self:GetSpecsForRole(selectedRole)
         if #specs > 0 then
             -- Use the first spec that matches the role
-            self:ChangeSpecialization(specs[1].index)
+            local currentSpec = GetSpecialization()
+            local needsChange = true
+            
+            -- Check if current spec already matches the selected role
+            if currentSpec then
+                local _, _, _, _, currentRole = GetSpecializationInfo(currentSpec)
+                if currentRole == selectedRole then
+                    needsChange = false
+                end
+            end
+            
+            -- Only change if needed
+            if needsChange then
+                self:ChangeSpecialization(specs[1].index)
+            end
         else
             print("|cffff0000PVP Assist:|r " .. (L["NO_SPEC_FOR_ROLE"] or "No specialization available for selected role"))
+            return
         end
     end
     
@@ -210,9 +240,24 @@ function QuickJoin:JoinArenaSkirmish()
         local specs = self:GetSpecsForRole(selectedRole)
         if #specs > 0 then
             -- Use the first spec that matches the role
-            self:ChangeSpecialization(specs[1].index)
+            local currentSpec = GetSpecialization()
+            local needsChange = true
+            
+            -- Check if current spec already matches the selected role
+            if currentSpec then
+                local _, _, _, _, currentRole = GetSpecializationInfo(currentSpec)
+                if currentRole == selectedRole then
+                    needsChange = false
+                end
+            end
+            
+            -- Only change if needed
+            if needsChange then
+                self:ChangeSpecialization(specs[1].index)
+            end
         else
             print("|cffff0000PVP Assist:|r " .. (L["NO_SPEC_FOR_ROLE"] or "No specialization available for selected role"))
+            return
         end
     end
     
@@ -438,6 +483,20 @@ function QuickJoin:CreateQuickJoinButton(parent, activityKey, yOffset)
         GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
         GameTooltip:SetText(L[activityKey], 1, 1, 1, 1, true)
         GameTooltip:AddLine(L["TOOLTIP_" .. activityKey], nil, nil, nil, true)
+        
+        -- Add spec change information if a role is selected
+        local selectedRole = QuickJoin:GetSelectedRole()
+        if selectedRole then
+            local specs = QuickJoin:GetSpecsForRole(selectedRole)
+            if #specs > 0 then
+                local roleText = selectedRole == ROLE_TANK and (L["ROLE_TANK"] or "Tank") or
+                                 selectedRole == ROLE_HEALER and (L["ROLE_HEALER"] or "Healer") or
+                                 (L["ROLE_DPS"] or "DPS")
+                GameTooltip:AddLine(" ", nil, nil, nil, true)
+                GameTooltip:AddLine(string.format(L["TOOLTIP_WILL_CHANGE_SPEC"] or "Will change to %s spec: %s", roleText, specs[1].name), 0.5, 1, 0.5, true)
+            end
+        end
+        
         GameTooltip:Show()
     end)
     

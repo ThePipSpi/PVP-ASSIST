@@ -87,6 +87,44 @@ function QuickJoin:SetSelectedRole(role)
     PVPAssistDB.selectedRole = role
 end
 
+-- Check and change spec based on selected role
+-- Returns true if should continue with queue, false if should abort
+function QuickJoin:CheckAndChangeSpecForSelectedRole()
+    local L = PVPAssist.L
+    local selectedRole = self:GetSelectedRole()
+    
+    if not selectedRole then
+        return true -- No role selected, continue without changing spec
+    end
+    
+    local specs = self:GetSpecsForRole(selectedRole)
+    if #specs == 0 then
+        print("|cffff0000PVP Assist:|r " .. (L["NO_SPEC_FOR_ROLE"] or "No specialization available for selected role"))
+        return false -- Abort queue
+    end
+    
+    -- Check if current spec already matches the selected role
+    local currentSpec = GetSpecialization()
+    local needsChange = true
+    
+    if currentSpec then
+        local _, _, _, _, currentRole = GetSpecializationInfo(currentSpec)
+        if currentRole == selectedRole then
+            needsChange = false
+        end
+    end
+    
+    -- Only change if needed
+    if needsChange then
+        local success = self:ChangeSpecialization(specs[1].index)
+        if not success then
+            return false -- Abort queue if spec change failed
+        end
+    end
+    
+    return true -- Continue with queue
+end
+
 -- Queue types and their configurations
 local QUEUE_TYPES = {
     RANDOM_BG = {
@@ -135,31 +173,9 @@ local QUEUE_TYPES = {
 function QuickJoin:JoinBattleground(bgType)
     local L = PVPAssist.L
     
-    -- Change spec based on selected role if applicable
-    local selectedRole = self:GetSelectedRole()
-    if selectedRole then
-        local specs = self:GetSpecsForRole(selectedRole)
-        if #specs > 0 then
-            -- Use the first spec that matches the role
-            local currentSpec = GetSpecialization()
-            local needsChange = true
-            
-            -- Check if current spec already matches the selected role
-            if currentSpec then
-                local _, _, _, _, currentRole = GetSpecializationInfo(currentSpec)
-                if currentRole == selectedRole then
-                    needsChange = false
-                end
-            end
-            
-            -- Only change if needed
-            if needsChange then
-                self:ChangeSpecialization(specs[1].index)
-            end
-        else
-            print("|cffff0000PVP Assist:|r " .. (L["NO_SPEC_FOR_ROLE"] or "No specialization available for selected role"))
-            return
-        end
+    -- Check and change spec based on selected role
+    if not self:CheckAndChangeSpecForSelectedRole() then
+        return -- Abort if spec change failed or no spec available
     end
     
     if not C_PvP then
@@ -190,31 +206,9 @@ end
 function QuickJoin:JoinSoloShuffle()
     local L = PVPAssist.L
     
-    -- Change spec based on selected role if applicable
-    local selectedRole = self:GetSelectedRole()
-    if selectedRole then
-        local specs = self:GetSpecsForRole(selectedRole)
-        if #specs > 0 then
-            -- Use the first spec that matches the role
-            local currentSpec = GetSpecialization()
-            local needsChange = true
-            
-            -- Check if current spec already matches the selected role
-            if currentSpec then
-                local _, _, _, _, currentRole = GetSpecializationInfo(currentSpec)
-                if currentRole == selectedRole then
-                    needsChange = false
-                end
-            end
-            
-            -- Only change if needed
-            if needsChange then
-                self:ChangeSpecialization(specs[1].index)
-            end
-        else
-            print("|cffff0000PVP Assist:|r " .. (L["NO_SPEC_FOR_ROLE"] or "No specialization available for selected role"))
-            return
-        end
+    -- Check and change spec based on selected role
+    if not self:CheckAndChangeSpecForSelectedRole() then
+        return -- Abort if spec change failed or no spec available
     end
     
     -- Open PVP UI to Solo Shuffle
@@ -234,31 +228,9 @@ end
 function QuickJoin:JoinArenaSkirmish()
     local L = PVPAssist.L
     
-    -- Change spec based on selected role if applicable
-    local selectedRole = self:GetSelectedRole()
-    if selectedRole then
-        local specs = self:GetSpecsForRole(selectedRole)
-        if #specs > 0 then
-            -- Use the first spec that matches the role
-            local currentSpec = GetSpecialization()
-            local needsChange = true
-            
-            -- Check if current spec already matches the selected role
-            if currentSpec then
-                local _, _, _, _, currentRole = GetSpecializationInfo(currentSpec)
-                if currentRole == selectedRole then
-                    needsChange = false
-                end
-            end
-            
-            -- Only change if needed
-            if needsChange then
-                self:ChangeSpecialization(specs[1].index)
-            end
-        else
-            print("|cffff0000PVP Assist:|r " .. (L["NO_SPEC_FOR_ROLE"] or "No specialization available for selected role"))
-            return
-        end
+    -- Check and change spec based on selected role
+    if not self:CheckAndChangeSpecForSelectedRole() then
+        return -- Abort if spec change failed or no spec available
     end
     
     -- Join arena skirmish queue
@@ -489,9 +461,16 @@ function QuickJoin:CreateQuickJoinButton(parent, activityKey, yOffset)
         if selectedRole then
             local specs = QuickJoin:GetSpecsForRole(selectedRole)
             if #specs > 0 then
-                local roleText = selectedRole == ROLE_TANK and (L["ROLE_TANK"] or "Tank") or
-                                 selectedRole == ROLE_HEALER and (L["ROLE_HEALER"] or "Healer") or
-                                 (L["ROLE_DPS"] or "DPS")
+                -- Map role to localized text
+                local roleText
+                if selectedRole == ROLE_TANK then
+                    roleText = L["ROLE_TANK"] or "Tank"
+                elseif selectedRole == ROLE_HEALER then
+                    roleText = L["ROLE_HEALER"] or "Healer"
+                else -- ROLE_DAMAGER
+                    roleText = L["ROLE_DPS"] or "DPS"
+                end
+                
                 GameTooltip:AddLine(" ", nil, nil, nil, true)
                 GameTooltip:AddLine(string.format(L["TOOLTIP_WILL_CHANGE_SPEC"] or "Will change to %s spec: %s", roleText, specs[1].name), 0.5, 1, 0.5, true)
             end

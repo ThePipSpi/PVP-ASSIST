@@ -450,7 +450,7 @@ function QuickJoin:CreateQuickJoinButton(parent, activityKey, yOffset)
     
     -- Quick join button
     local button = CreateFrame("Button", nil, container, "UIPanelButtonTemplate")
-    button:SetSize(90, 25)
+    button:SetSize(110, 25)
     button:SetPoint("RIGHT", -5, 0)
     button:SetText(L["JOIN_QUEUE"])
     
@@ -516,7 +516,7 @@ function QuickJoin:CreateArenaButton(parent, arenaType, yOffset)
     
     -- Open LFG button
     local button = CreateFrame("Button", nil, container, "UIPanelButtonTemplate")
-    button:SetSize(90, 25)
+    button:SetSize(110, 25)
     button:SetPoint("RIGHT", -5, 0)
     button:SetText(L["OPEN_LFG"])
     

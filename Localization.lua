@@ -20,7 +20,7 @@ local enUS = {
     -- Main UI
     ["TITLE"] = "PVP Assist - Honor & Conquest Tracker",
     ["CURRENT_STATUS"] = "Current Status",
-    ["RECOMMENDED_ACTIVITIES"] = "Recommended Activities",
+    ["SESSION_TRACKING"] = "Session Tracking",
     ["QUICK_JOIN"] = "Quick Join",
     ["WEEKLY_QUESTS"] = "Weekly PVP Quests",
     ["TIPS"] = "Tips",
@@ -93,6 +93,12 @@ local enUS = {
     ["DATA_REFRESHED"] = "Data refreshed!",
     ["JOINED_QUEUE"] = "Joining %s queue...",
     ["OPENING_LFG"] = "Opening Group Finder for %s...",
+    
+    -- Quest Help
+    ["QUEST_HELP_TITLE"] = "How to get weekly PVP quests:",
+    ["QUEST_HELP_1"] = "Visit your faction's PVP area",
+    ["QUEST_HELP_2"] = "Check the Adventure Guide (Shift+J)",
+    ["QUEST_HELP_3"] = "Look for quests near PVP vendors",
 }
 
 -- Italian translations
@@ -100,7 +106,7 @@ local itIT = {
     -- Main UI
     ["TITLE"] = "PVP Assist - Tracker Onore & Conquista",
     ["CURRENT_STATUS"] = "Stato Attuale",
-    ["RECOMMENDED_ACTIVITIES"] = "Attività Consigliate",
+    ["SESSION_TRACKING"] = "Tracciamento Sessione",
     ["QUICK_JOIN"] = "Accesso Rapido",
     ["WEEKLY_QUESTS"] = "Missioni PVP Settimanali",
     ["TIPS"] = "Suggerimenti",
@@ -173,6 +179,12 @@ local itIT = {
     ["DATA_REFRESHED"] = "Dati aggiornati!",
     ["JOINED_QUEUE"] = "Entrando in coda %s...",
     ["OPENING_LFG"] = "Apertura Ricerca Gruppo per %s...",
+    
+    -- Quest Help
+    ["QUEST_HELP_TITLE"] = "Come ottenere missioni PVP settimanali:",
+    ["QUEST_HELP_1"] = "Visita l'area PVP della tua fazione",
+    ["QUEST_HELP_2"] = "Controlla la Guida alle Avventure (Shift+J)",
+    ["QUEST_HELP_3"] = "Cerca missioni vicino ai venditori PVP",
 }
 
 -- Set up localization table

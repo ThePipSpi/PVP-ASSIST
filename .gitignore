@@ -1,0 +1,25 @@
+# WoW SavedVariables
+WTF/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+/tmp/
+*.tmp
+
+# Package files
+*.zip
+*.7z

@@ -64,6 +64,15 @@ local enUS = {
     ["JOIN_QUEUE"] = "Join Queue",
     ["OPEN_LFG"] = "Open LFG",
     
+    -- Role Selection
+    ["SELECT_ROLE"] = "Select Role:",
+    ["ROLE_TANK"] = "Tank",
+    ["ROLE_HEALER"] = "Healer",
+    ["ROLE_DPS"] = "DPS",
+    ["CHANGED_SPEC"] = "Changed specialization to %s",
+    ["CANNOT_CHANGE_SPEC_COMBAT"] = "Cannot change specialization while in combat",
+    ["NO_SPEC_FOR_ROLE"] = "No specialization available for selected role",
+    
     -- Tips
     ["TIP_1"] = "Complete daily/weekly quests for bonus rewards",
     ["TIP_2"] = "Enable War Mode for 10-30% bonus honor",
@@ -133,6 +142,15 @@ local itIT = {
     ["REFRESH"] = "Aggiorna",
     ["JOIN_QUEUE"] = "Entra in Coda",
     ["OPEN_LFG"] = "Apri Ricerca Gruppo",
+    
+    -- Role Selection
+    ["SELECT_ROLE"] = "Seleziona Ruolo:",
+    ["ROLE_TANK"] = "Tank",
+    ["ROLE_HEALER"] = "Healer",
+    ["ROLE_DPS"] = "DPS",
+    ["CHANGED_SPEC"] = "Specializzazione cambiata in %s",
+    ["CANNOT_CHANGE_SPEC_COMBAT"] = "Impossibile cambiare specializzazione durante il combattimento",
+    ["NO_SPEC_FOR_ROLE"] = "Nessuna specializzazione disponibile per il ruolo selezionato",
     
     -- Tips
     ["TIP_1"] = "Completa missioni giornaliere/settimanali per ricompense bonus",

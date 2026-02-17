@@ -162,11 +162,15 @@ function PVPAssist:UpdateUI()
         CreateSectionHeader(contentFrame, "⚔️ " .. (L["QUICK_JOIN"] or "Quick Join"), yOffset)
         yOffset = yOffset + spacing
         
-        -- Add quick join buttons for various activities
+        -- Add role selector
         local qj = PVPAssist.QuickJoin
+        local _, newOffset = qj:CreateRoleSelector(contentFrame, yOffset)
+        yOffset = newOffset
+        
+        -- Add quick join buttons for various activities
         
         -- Random BG
-        local _, newOffset = qj:CreateQuickJoinButton(contentFrame, "RANDOM_BG", yOffset)
+        _, newOffset = qj:CreateQuickJoinButton(contentFrame, "RANDOM_BG", yOffset)
         yOffset = newOffset
         
         -- Epic BG

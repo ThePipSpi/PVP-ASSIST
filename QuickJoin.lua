@@ -6,6 +6,87 @@ local addonName, PVPAssist = ...
 PVPAssist.QuickJoin = {}
 local QuickJoin = PVPAssist.QuickJoin
 
+-- Role types
+local ROLE_TANK = "TANK"
+local ROLE_HEALER = "HEALER"
+local ROLE_DAMAGER = "DAMAGER"
+
+-- Get available specs for the player's class and their roles
+function QuickJoin:GetPlayerSpecsAndRoles()
+    local specs = {}
+    local numSpecs = GetNumSpecializations()
+    
+    for i = 1, numSpecs do
+        local specID, specName, _, _, role = GetSpecializationInfo(i)
+        if specID and specName and role then
+            table.insert(specs, {
+                index = i,
+                id = specID,
+                name = specName,
+                role = role
+            })
+        end
+    end
+    
+    return specs
+end
+
+-- Get specs that match a specific role
+function QuickJoin:GetSpecsForRole(role)
+    local specs = self:GetPlayerSpecsAndRoles()
+    local matchingSpecs = {}
+    
+    for _, spec in ipairs(specs) do
+        if spec.role == role then
+            table.insert(matchingSpecs, spec)
+        end
+    end
+    
+    return matchingSpecs
+end
+
+-- Change player's specialization
+function QuickJoin:ChangeSpecialization(specIndex)
+    if not specIndex then return false end
+    
+    -- Check if player is in combat
+    if InCombatLockdown() then
+        local L = PVPAssist.L
+        print("|cffff0000PVP Assist:|r " .. (L["CANNOT_CHANGE_SPEC_COMBAT"] or "Cannot change specialization while in combat"))
+        return false
+    end
+    
+    -- Get current spec
+    local currentSpec = GetSpecialization()
+    if currentSpec == specIndex then
+        -- Already in the correct spec
+        return true
+    end
+    
+    -- Change specialization
+    SetSpecialization(specIndex)
+    
+    local L = PVPAssist.L
+    local _, specName = GetSpecializationInfo(specIndex)
+    print("|cff00ff00PVP Assist:|r " .. string.format(L["CHANGED_SPEC"] or "Changed specialization to %s", specName))
+    
+    return true
+end
+
+-- Get selected role from saved variables
+function QuickJoin:GetSelectedRole()
+    if not PVPAssistDB then return nil end
+    return PVPAssistDB.selectedRole
+end
+
+-- Set selected role in saved variables
+function QuickJoin:SetSelectedRole(role)
+    if not PVPAssistDB then
+        PVPAssistDB = {}
+    end
+    PVPAssistDB.selectedRole = role
+end
+
 -- Queue types and their configurations
 local QUEUE_TYPES = {
     RANDOM_BG = {
@@ -54,6 +135,18 @@ local QUEUE_TYPES = {
 function QuickJoin:JoinBattleground(bgType)
     local L = PVPAssist.L
     
+    -- Change spec based on selected role if applicable
+    local selectedRole = self:GetSelectedRole()
+    if selectedRole then
+        local specs = self:GetSpecsForRole(selectedRole)
+        if #specs > 0 then
+            -- Use the first spec that matches the role
+            self:ChangeSpecialization(specs[1].index)
+        else
+            print("|cffff0000PVP Assist:|r " .. (L["NO_SPEC_FOR_ROLE"] or "No specialization available for selected role"))
+        end
+    end
+    
     if not C_PvP then
         print("|cffff0000PVP Assist:|r C_PvP API not available")
         return
@@ -82,6 +175,18 @@ end
 function QuickJoin:JoinSoloShuffle()
     local L = PVPAssist.L
     
+    -- Change spec based on selected role if applicable
+    local selectedRole = self:GetSelectedRole()
+    if selectedRole then
+        local specs = self:GetSpecsForRole(selectedRole)
+        if #specs > 0 then
+            -- Use the first spec that matches the role
+            self:ChangeSpecialization(specs[1].index)
+        else
+            print("|cffff0000PVP Assist:|r " .. (L["NO_SPEC_FOR_ROLE"] or "No specialization available for selected role"))
+        end
+    end
+    
     -- Open PVP UI to Solo Shuffle
     if PVPUIFrame then
         ShowUIPanel(PVPUIFrame)
@@ -98,6 +203,18 @@ end
 -- Join arena skirmish
 function QuickJoin:JoinArenaSkirmish()
     local L = PVPAssist.L
+    
+    -- Change spec based on selected role if applicable
+    local selectedRole = self:GetSelectedRole()
+    if selectedRole then
+        local specs = self:GetSpecsForRole(selectedRole)
+        if #specs > 0 then
+            -- Use the first spec that matches the role
+            self:ChangeSpecialization(specs[1].index)
+        else
+            print("|cffff0000PVP Assist:|r " .. (L["NO_SPEC_FOR_ROLE"] or "No specialization available for selected role"))
+        end
+    end
     
     -- Join arena skirmish queue
     if C_PvP and C_PvP.JoinSkirmish then
@@ -130,6 +247,122 @@ function QuickJoin:OpenArenaLFG(arenaType)
     else
         print("|cffff0000PVP Assist:|r Unable to open Group Finder")
     end
+end
+
+-- Create role selection UI
+function QuickJoin:CreateRoleSelector(parent, yOffset)
+    local L = PVPAssist.L
+    
+    -- Create container frame
+    local container = CreateFrame("Frame", nil, parent)
+    container:SetSize(380, 30)
+    container:SetPoint("TOPLEFT", 10, yOffset)
+    
+    -- Role label
+    local label = container:CreateFontString(nil, "OVERLAY")
+    label:SetFontObject("GameFontNormal")
+    label:SetPoint("LEFT", 5, 0)
+    label:SetText(L["SELECT_ROLE"] or "Select Role:")
+    
+    -- Get available specs and roles
+    local specs = self:GetPlayerSpecsAndRoles()
+    local availableRoles = {}
+    for _, spec in ipairs(specs) do
+        availableRoles[spec.role] = true
+    end
+    
+    -- Calculate starting position for checkboxes
+    local checkboxStartX = 120
+    local checkboxSpacing = 90
+    local currentX = checkboxStartX
+    
+    -- Tank checkbox
+    if availableRoles[ROLE_TANK] then
+        local tankCheck = CreateFrame("CheckButton", nil, container, "UICheckButtonTemplate")
+        tankCheck:SetSize(24, 24)
+        tankCheck:SetPoint("LEFT", currentX, 0)
+        tankCheck.text:SetText(L["ROLE_TANK"] or "Tank")
+        tankCheck.text:SetFontObject("GameFontHighlightSmall")
+        
+        -- Load saved state
+        local selectedRole = self:GetSelectedRole()
+        if selectedRole == ROLE_TANK then
+            tankCheck:SetChecked(true)
+        end
+        
+        tankCheck:SetScript("OnClick", function(self)
+            if self:GetChecked() then
+                QuickJoin:SetSelectedRole(ROLE_TANK)
+                -- Uncheck other roles
+                if container.healerCheck then container.healerCheck:SetChecked(false) end
+                if container.dpsCheck then container.dpsCheck:SetChecked(false) end
+            else
+                QuickJoin:SetSelectedRole(nil)
+            end
+        end)
+        
+        container.tankCheck = tankCheck
+        currentX = currentX + checkboxSpacing
+    end
+    
+    -- Healer checkbox
+    if availableRoles[ROLE_HEALER] then
+        local healerCheck = CreateFrame("CheckButton", nil, container, "UICheckButtonTemplate")
+        healerCheck:SetSize(24, 24)
+        healerCheck:SetPoint("LEFT", currentX, 0)
+        healerCheck.text:SetText(L["ROLE_HEALER"] or "Healer")
+        healerCheck.text:SetFontObject("GameFontHighlightSmall")
+        
+        -- Load saved state
+        local selectedRole = self:GetSelectedRole()
+        if selectedRole == ROLE_HEALER then
+            healerCheck:SetChecked(true)
+        end
+        
+        healerCheck:SetScript("OnClick", function(self)
+            if self:GetChecked() then
+                QuickJoin:SetSelectedRole(ROLE_HEALER)
+                -- Uncheck other roles
+                if container.tankCheck then container.tankCheck:SetChecked(false) end
+                if container.dpsCheck then container.dpsCheck:SetChecked(false) end
+            else
+                QuickJoin:SetSelectedRole(nil)
+            end
+        end)
+        
+        container.healerCheck = healerCheck
+        currentX = currentX + checkboxSpacing
+    end
+    
+    -- DPS checkbox
+    if availableRoles[ROLE_DAMAGER] then
+        local dpsCheck = CreateFrame("CheckButton", nil, container, "UICheckButtonTemplate")
+        dpsCheck:SetSize(24, 24)
+        dpsCheck:SetPoint("LEFT", currentX, 0)
+        dpsCheck.text:SetText(L["ROLE_DPS"] or "DPS")
+        dpsCheck.text:SetFontObject("GameFontHighlightSmall")
+        
+        -- Load saved state
+        local selectedRole = self:GetSelectedRole()
+        if selectedRole == ROLE_DAMAGER then
+            dpsCheck:SetChecked(true)
+        end
+        
+        dpsCheck:SetScript("OnClick", function(self)
+            if self:GetChecked() then
+                QuickJoin:SetSelectedRole(ROLE_DAMAGER)
+                -- Uncheck other roles
+                if container.tankCheck then container.tankCheck:SetChecked(false) end
+                if container.healerCheck then container.healerCheck:SetChecked(false) end
+            else
+                QuickJoin:SetSelectedRole(nil)
+            end
+        end)
+        
+        container.dpsCheck = dpsCheck
+    end
+    
+    return container, yOffset - 35
 end
 
 -- Get reward information for an activity

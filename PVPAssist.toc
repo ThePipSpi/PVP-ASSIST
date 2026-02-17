@@ -1,0 +1,9 @@
+## Interface: 110002
+## Title: PVP Assist
+## Notes: Helps players track and complete tasks to maximize Honor and Conquest points
+## Author: ThePipSpi
+## Version: 1.0.0
+## SavedVariables: PVPAssistDB
+
+Core.lua
+UI.lua

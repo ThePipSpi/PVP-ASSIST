@@ -57,7 +57,7 @@ local enUS = {
     ["TOOLTIP_SOLO_SHUFFLE"] = "Click to join Solo Shuffle queue\nReward: ~30-60 Conquest per round\nSolo queue rated arena",
     ["TOOLTIP_ARENA_2V2"] = "Click to open LFG for 2v2 Arena\nReward: ~25-50 Conquest per win\nFind arena partners",
     ["TOOLTIP_ARENA_3V3"] = "Click to open LFG for 3v3 Arena\nReward: ~25-50 Conquest per win\nFind arena partners",
-    ["TOOLTIP_SKIRMISH"] = "Click to join Arena Skirmish\nReward: ~15-30 Honor per win\nPractice arena battles",
+    ["TOOLTIP_ARENA_SKIRMISH"] = "Click to join Arena Skirmish\nReward: ~15-30 Honor per win\nPractice arena battles",
     
     -- Buttons
     ["REFRESH"] = "Refresh",
@@ -127,7 +127,7 @@ local itIT = {
     ["TOOLTIP_SOLO_SHUFFLE"] = "Clicca per entrare in coda Solo Shuffle\nRicompensa: ~30-60 Conquista per round\nArena valutata in coda singola",
     ["TOOLTIP_ARENA_2V2"] = "Clicca per aprire Ricerca Gruppo per Arena 2v2\nRicompensa: ~25-50 Conquista per vittoria\nTrova compagni di arena",
     ["TOOLTIP_ARENA_3V3"] = "Clicca per aprire Ricerca Gruppo per Arena 3v3\nRicompensa: ~25-50 Conquista per vittoria\nTrova compagni di arena",
-    ["TOOLTIP_SKIRMISH"] = "Clicca per entrare in Schermaglia Arena\nRicompensa: ~15-30 Onore per vittoria\nBattaglie di pratica in arena",
+    ["TOOLTIP_ARENA_SKIRMISH"] = "Clicca per entrare in Schermaglia Arena\nRicompensa: ~15-30 Onore per vittoria\nBattaglie di pratica in arena",
     
     -- Buttons
     ["REFRESH"] = "Aggiorna",

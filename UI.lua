@@ -349,23 +349,20 @@ end)
 local refreshButton = CreateFrame("Button", nil, mainFrame, "UIPanelButtonTemplate")
 refreshButton:SetSize(100, 25)
 refreshButton:SetPoint("BOTTOMLEFT", mainFrame, "BOTTOMLEFT", 10, 10)
+
+-- Set initial button text
+local function UpdateRefreshButtonText()
+    local L = PVPAssist.L or {}
+    refreshButton:SetText(L["REFRESH"] or "Refresh")
+end
+
 refreshButton:SetScript("OnClick", function()
     PVPAssist:UpdateUI()
     local L = PVPAssist.L or {}
     print("|cff00ff00PVP Assist:|r " .. (L["DATA_REFRESHED"] or "Data refreshed!"))
 end)
 
--- Update button text when UI updates
-local function UpdateRefreshButton()
-    local L = PVPAssist.L or {}
-    refreshButton:SetText(L["REFRESH"] or "Refresh")
-end
-
--- Hook into UpdateUI to update button text
-local originalUpdateUI = PVPAssist.UpdateUI
-PVPAssist.UpdateUI = function(self)
-    originalUpdateUI(self)
-    UpdateRefreshButton()
-end
+-- Initialize button text
+UpdateRefreshButtonText()
 
 -- Close button is already provided by BasicFrameTemplateWithInset
